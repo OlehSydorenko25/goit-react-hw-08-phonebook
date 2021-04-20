@@ -1,11 +1,15 @@
 .contactList {
   display: block;
-  width: 270px;
+  width: 500px;
   padding: 0;
 }
 
 .contact {
   display: flex;
+  align-items: center;
+  background-color: #f7dae9;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .contact:not(:last-child) {
@@ -15,8 +19,4 @@
 .contact button {
   display: block;
   margin-left: auto;
-}
-
-.contact button:hover {
-  background-color: rgb(142, 198, 250);
 }

@@ -49,30 +49,32 @@ class ContactForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className={styles.form}>
-        <label htmlFor={this.nameInputId}>
+        <label htmlFor={this.nameInputId} className={StyleSheet.label}>
           Name
           <input
             type="text"
             name="name"
+            className={styles.input}
             value={this.state.name}
             onChange={this.handleChange}
             id={this.nameInputId}
           />
         </label>
 
-        <label htmlFor={this.numberInputId}>
+        <label htmlFor={this.numberInputId} className={StyleSheet.label}>
           Number
           <input
             type="text"
             name="number"
+            className={styles.input}
             value={this.state.number}
             onChange={this.handleChange}
             id={this.numberInputId}
           />
         </label>
 
-        <Button type="submit" variant="contained" color="primary">
-          Add contact
+        <Button type="submit" variant="outlined" color="primary">
+          Add contacts
         </Button>
 
         {/* <button type="submit">Add contact</button> */}

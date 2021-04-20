@@ -3,30 +3,32 @@ import { connect } from 'react-redux';
 import contactsOperations from '../../../redux/contacts/contacts-operations';
 import selectors from '../../../redux/contacts/contacts-selectors';
 import styles from './ContactList.module.css';
+import Button from '@material-ui/core/Button';
 
 class ContactList extends Component {
   state = {};
 
   componentDidMount() {
-    // console.log('componentDidMount');
     this.props.fetchContacts();
   }
 
   render() {
     return (
-      // <h3>qwe</h3>
       <ul className={styles.contactList}>
         {this.props.contactList.map(({ id, name, number }) => {
           return (
             <li key={id} className={styles.contact}>
               <span>{name}: </span>
               <span>{number}</span>
-              <button
+
+              <Button
                 type="button"
+                variant="contained"
+                color="secondary"
                 onClick={() => this.props.onDeleteContact(id)}
               >
                 Delete
-              </button>
+              </Button>
             </li>
           );
         })}

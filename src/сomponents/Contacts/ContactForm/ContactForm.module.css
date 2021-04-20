@@ -1,4 +1,4 @@
-.form {
+/* .form {
   display: inline-flex;
   flex-direction: column;
 }
@@ -18,6 +18,26 @@
 
 .form button:hover {
   background-color: rgb(142, 198, 250);
+} */
+
+/* ------------------------ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  line-height: 30px;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 /* .form label input :not(:last-child) {
