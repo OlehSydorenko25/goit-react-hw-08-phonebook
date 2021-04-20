@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import authOperations from '../redux/auth/auth-operations';
+import { v4 as uuidv4 } from 'uuid';
 
 class LoginPage extends Component {
   state = {
     email: '',
     password: '',
   };
+
+  emailInputId = uuidv4();
+  passwordInputId = uuidv4();
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
@@ -17,6 +21,10 @@ class LoginPage extends Component {
 
     this.props.onLogin(this.state);
 
+    this.reset();
+  };
+
+  reset = () => {
     this.setState({ email: '', password: '' });
   };
 
@@ -28,13 +36,14 @@ class LoginPage extends Component {
         <h1>Страница авторизации</h1>
 
         <form onSubmit={this.handleSubmit}>
-          <label>
+          <label htmlFor={this.emailInputId}>
             Почта
             <input
               type="email"
               name="email"
               velue={email}
               onChange={this.handleChange}
+              id={this.emailInputId}
             />
           </label>
 
@@ -45,6 +54,7 @@ class LoginPage extends Component {
               name="password"
               velue={password}
               onChange={this.handleChange}
+              id={this.passwordInputId}
             />
           </label>
 

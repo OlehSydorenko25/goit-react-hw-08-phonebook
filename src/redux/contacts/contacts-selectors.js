@@ -3,10 +3,10 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const getFilter = state => state.phonebook.filter;
 
-const geAllContacts = state => state.phonebook.contacts;
+const getAllContacts = state => state.phonebook.contacts;
 
 const getVisibleContacts = createSelector(
-  [geAllContacts, getFilter],
+  [getAllContacts, getFilter],
   (contacts, filter) => {
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(({ name }) =>
@@ -18,5 +18,5 @@ const getVisibleContacts = createSelector(
 export default {
   getVisibleContacts,
   getFilter,
-  geAllContacts,
+  getAllContacts,
 };

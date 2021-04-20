@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import contactsOperations from '../../../redux/contacts/contacts-operations';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 
 import styles from './ContactForm.module.css';
 
@@ -19,17 +20,13 @@ class ContactForm extends Component {
   nameInputId = uuidv4();
   numberInputId = uuidv4();
 
-  handleChange = e => {
-    const value = e.currentTarget.name;
-
-    this.setState({
-      [value]: e.currentTarget.value,
-    });
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    // console.log(this.props);
+
     // Проверка на Одинаковие слова разного регистра
     this.props.phonebook.contacts.find(
       ({ name, number }) =>
@@ -74,7 +71,11 @@ class ContactForm extends Component {
           />
         </label>
 
-        <button type="submit">Add contact</button>
+        <Button type="submit" variant="contained" color="primary">
+          Add contact
+        </Button>
+
+        {/* <button type="submit">Add contact</button> */}
       </form>
     );
   }

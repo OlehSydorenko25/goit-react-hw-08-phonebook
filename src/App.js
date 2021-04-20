@@ -1,34 +1,11 @@
-// import React from 'react';
-// import { connect } from 'react-redux';
-// import Container from './сomponents/Container/Container';
-// import ContactForm from './сomponents/ContactForm/ContactForm';
-// import Filter from './сomponents/Filter/Filter';
-// import ContactList from './сomponents/ContactList/ContactList';
-
-// import './index.css';
-
-// const App = () => {
-//   return (
-//     <Container>
-//       <h1>Phonebook</h1>
-//       <ContactForm />
-//       <h2>Contacts</h2>
-//       <Filter />
-//       <ContactList />
-//     </Container>
-//   );
-// };
-
-// const mapStateToProps = state => ({
-//   contactList: state.contacts,
-// });
-
-// export default connect(mapStateToProps)(App);
-
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import AppBar from './сomponents/UserMenu/AppBar';
 import routes from './routes';
+import authOps from './redux/auth/auth-operations';
+import { connect } from 'react-redux';
+import PrivateRoute from './сomponents/UserMenu/PrivateRoute';
+import PublicRoute from './сomponents/UserMenu/PublicRoute';
 
 const HomePage = lazy(() =>
   import('./views/HomePage' /* webpackChunkName: "home-page" */),
@@ -52,21 +29,48 @@ const NotFoundPage = lazy(() =>
   import('./views/NotFoundPage' /* webpackChunkName: "Not-found-page" */),
 );
 
-const App = () => (
-  <>
-    <AppBar />
-    <Suspense fallback={<h4>Loading...</h4>}>
-      <Switch>
-        <Route path={routes.home} exact component={HomePage} />
-        <Route path={routes.contacts} component={ContactsPage} />
+class App extends Component {
+  componentDidMount() {
+    this.props.onGetCurrentUser();
+  }
 
-        <Route path={routes.register} component={RegisterPage} />
-        <Route path={routes.login} component={LoginPage} />
+  render() {
+    return (
+      <>
+        <AppBar />
+        <Suspense fallback={<h4>Loading...</h4>}>
+          <Switch>
+            <Route path={routes.home} exact component={HomePage} />
+            <PrivateRoute
+              path={routes.contacts}
+              component={ContactsPage}
+              redirectTo="/login"
+            />
 
-        <Route component={NotFoundPage} />
-      </Switch>
-    </Suspense>
-  </>
-);
+            <PublicRoute
+              path={routes.register}
+              restricted
+              component={RegisterPage}
+              redirectTo="/contacts"
+            />
 
-export default App;
+            <PublicRoute
+              path={routes.login}
+              restricted
+              component={LoginPage}
+              redirectTo="/contacts"
+            />
+
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Suspense>
+      </>
+    );
+  }
+}
+
+const mapDispatchToProps = {
+  onGetCurrentUser: authOps.getCurrentUser,
+};
+
+export default connect(null, mapDispatchToProps)(App);

@@ -8,6 +8,7 @@ class ContactList extends Component {
   state = {};
 
   componentDidMount() {
+    // console.log('componentDidMount');
     this.props.fetchContacts();
   }
 
